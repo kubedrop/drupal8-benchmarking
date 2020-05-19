@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - develop
+      - stage
+      - master
 
 jobs:
   build:
@@ -23,4 +25,4 @@ jobs:
         prefix=${GITHUB_REF#"refs/heads/"}
         tag=$prefix-$commit_id
         docker tag $image_repo:latest $image_repo:$tag
-        docker push $image_repo:$tag
+      docker push $image_repo:$tag
