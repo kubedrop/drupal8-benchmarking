@@ -9,11 +9,14 @@ services:
     working_dir: /app
     volumes:
       - app:/app
+    networks: 
+      - continua-demo
 
   drupal:
     image: srijanlabs/php-fpm-apache:7.3-1.x
     depends_on:
       - cli
+      - db
     command: ["start.sh"]
     ports:
       - 9000:9000
@@ -23,6 +26,8 @@ services:
       - app:/app
     env_file: 
       - .db-env
+    networks: 
+     - continua-demo
   
   db:
     image: mysql:5.6
@@ -35,18 +40,8 @@ services:
       MYSQL_USER: vega
       MYSQL_PASSWORD: vega
       MYSQL_DATABASE: vega
-  
-  # mailhog:
-  #   image: mailhog/mailhog
-  #   ports:
-  #     - 8025:8025
-
-  # blackfire:
-  #   image: blackfire/blackfire
-  #   environment:
-  #     # Exposes BLACKFIRE_SERVER_* environment variables from the host
-  #     BLACKFIRE_SERVER_ID: 1ce028d2-644b-4451-9eaa-7f142f4151cc
-  #     BLACKFIRE_SERVER_TOKEN: 91471c1696eefc49bf4a397ddafc457a49825c57ccbd45916a64e23aa106add0
+    networks: 
+     - continua-demo
 
 volumes:
   app:
@@ -56,3 +51,6 @@ volumes:
       type: none
       device: ${PWD}
   data:
+
+networks:
+  continua-demo:
