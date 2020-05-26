@@ -24,8 +24,8 @@ services:
     volumes:
       - ./apache/vhost/app.conf:/etc/apache2/sites-enabled/000-default.conf 
       - app:/app
-    env_file: 
-      - .db-env
+    # env_file: 
+    #   - .db-env
     networks: 
      - continua-demo
   
